@@ -1,0 +1,14 @@
+.studio-header {
+    display: flex;
+}
+
+.studio-photo {
+    max-height: 100px;
+    margin-right: 1rem;
+    flex-grow: 1;
+    text-align: right;
+
+    img {
+        height: 100%;
+    }
+}

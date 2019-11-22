@@ -1,0 +1,57 @@
+.SceneForm {
+    img {
+        width: 100%;
+    }
+
+    label {
+        font-weight: 700;
+    }
+
+    .performer-item {
+        display: flex;
+        margin: 0.5rem 0;
+        align-items: center;
+
+        label {
+            padding: 0 0.5rem;
+            margin-left: auto;
+        }
+    }
+
+    .performer-name {
+        font-weight: bold;
+    }
+
+    .performer-remove {
+        background: transparent;
+        border: none;
+        color: rgba(0,0,0,0.5);
+
+        &:hover {
+            color: rgba(0,0,0,0.8);
+        }
+    }
+
+    .add-performer {
+        display: flex;
+        align-items: center;
+
+        .SearchField {
+            padding-top: 0.5rem;
+            display: inline-block;
+            margin-left: auto;
+        }
+    }
+    
+    .description {
+        height: 10rem;
+    }
+
+    .button-row {
+        display: flex;
+
+        .reset-button {
+            margin-left: auto;
+        }
+    }
+}

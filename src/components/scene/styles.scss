@@ -1,0 +1,27 @@
+.fa-mars, .fa-venus, .fa-transgender-alt {
+    margin-right: 0.25rem;
+}
+.fa-mars {
+    color: #89cff0;
+}
+
+.fa-venus {
+    color: #f38cac
+}
+
+.fa-transgender-alt {
+    color: #c8a2c8;
+}
+
+.scene-photo {
+    padding: 0;
+    min-height: 200px;
+
+    &-element {
+        width: 100%;
+    }
+}
+
+.scene-description {
+    padding: 1rem 0;
+}

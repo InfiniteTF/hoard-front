@@ -1,0 +1,26 @@
+#hoard {
+    @import "./components/**/*.scss";
+}
+
+#hoard-content {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 2rem;
+}
+
+.welcome {
+    margin-right: 2rem;
+}
+
+.pagination {
+    margin-right: 1rem;
+    margin-left: auto;
+}
+
+a[aria-current] {
+    font-weight: bold;
+}
+
+.btn {
+    margin: 0.5rem;
+}

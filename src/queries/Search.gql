@@ -1,0 +1,11 @@
+mutation Search($term: String!) {
+  search(term: $term) {
+    uuid
+    id
+	name
+    displayName
+	disambiguation
+	photoUrl
+    gender
+  }
+}

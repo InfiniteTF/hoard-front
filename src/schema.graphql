@@ -1,0 +1,165 @@
+schema {
+  query: QueryRoot
+  mutation: Mutation
+}
+
+type Actor {
+  id: Int!
+  uuid: Uuid!
+  name: String!
+  disambiguation: String!
+  gender: String!
+  birthdate: NaiveDate
+  birthdateAccuracy: Int
+  height: Int
+  eyeColor: String
+  hairColor: String
+  boobJob: Boolean
+  braSize: String
+  waistSize: Int
+  hipSize: Int
+  tattoos: [String!]
+  piercings: [String!]
+  ethnicity: String
+  countryId: Int
+  location: String
+  photoUrl: String
+  careerStart: NaiveDate
+  careerStartAccuracy: Int
+  careerEnd: NaiveDate
+  careerEndAccuracy: Int
+}
+
+type ActorScene {
+  actorId: Int!
+  sceneId: Int!
+  alias: String!
+}
+
+input AddActorInput {
+  name: String!
+  disambiguation: String!
+  gender: String!
+  birthdate: NaiveDate
+  birthdateAccuracy: Int
+  height: Int
+  eyeColor: String
+  hairColor: String
+  boobJob: Boolean
+  braSize: String
+  waistSize: Int
+  hipSize: Int
+  tattoos: [String!]
+  piercings: [String!]
+  ethnicity: String
+  countryId: Int
+  location: String
+  photoUrl: String
+  careerStart: NaiveDate
+  careerStartAccuracy: Int
+  careerEnd: NaiveDate
+  careerEndAccuracy: Int
+}
+
+input AddSceneInput {
+  studioId: Int!
+  title: String
+  date: NaiveDate
+  dateAccuracy: Int
+  description: String
+  duration: Int
+  photoUrl: String
+  checksums: [String!]
+}
+
+input AddStudioInput {
+  parentId: Int
+  title: String!
+  url: String
+  photoUrl: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  registerUser(input: RegisterUserInput!): User!
+  loginUser(input: LoginUserInput!): Token!
+  addActor(input: AddActorInput!): Actor!
+  addStudio(input: AddStudioInput!): Studio!
+  addSceneActor(input: NewActorScene!): ActorScene!
+  addScene(input: AddSceneInput!): Scene!
+}
+
+# NaiveDate
+scalar NaiveDate
+
+# NaiveDateTime
+scalar NaiveDateTime
+
+input NewActorScene {
+  actorId: Int!
+  sceneId: Int!
+  alias: String!
+}
+
+input PaginationInput {
+  skip: Int!
+  limit: Int!
+}
+
+type QueryRoot {
+  me: User!
+  users(input: PaginationInput!): [User!]!
+  actors(input: PaginationInput!): [Actor!]!
+  studios(input: PaginationInput!): [Studio!]!
+  scenes(input: PaginationInput!): [Scene!]!
+}
+
+input RegisterUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type Scene {
+  performers: [Actor!]!
+  studio: Studio!
+  id: Int!
+  title: String
+  date: NaiveDate
+  dateAccuracy: Int
+  description: String
+  duration: Int
+  photoUrl: String
+}
+
+type SlimUser {
+  email: String
+}
+
+type Studio {
+  subStudios: [Studio!]!
+  id: Int!
+  title: String!
+  url: String
+  photoUrl: String
+  parentId: Int
+}
+
+type Token {
+  bearer: String
+  user: SlimUser!
+}
+
+type User {
+  email: String!
+  createdAt: NaiveDateTime!
+  username: String!
+}
+
+# Uuid
+scalar Uuid
+
