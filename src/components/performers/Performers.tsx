@@ -8,6 +8,7 @@ import { Card } from 'react-bootstrap';
 import { RouteComponentProps, Link } from '@reach/router';
 import Pagination from '../pagination';
 
+import { LoadingIndicator } from '../fragments';
 
 const Performers: React.FC<RouteComponentProps> = () => {
     const [page, setPage] = useState(1);
@@ -17,7 +18,7 @@ const Performers: React.FC<RouteComponentProps> = () => {
     const { loading: loadingTotal, data: countData } = useQuery<PerformerCount>(PerformerCountQuery);
 
     if (loadingTotal)
-        return <div>Loading performers...</div>
+        return <LoadingIndicator message="Loading performers..." />
 
     const handlePagination = (page:number) => setPage(page);
     const totalPages = Math.ceil(countData.performerCount / 20)

@@ -41,9 +41,10 @@ export interface Performer_getPerformer {
   careerEnd: number | null;
   cupSize: string | null;
   bandSize: number | null;
-  boobJob: string | null;
+  boobJob: boolean | null;
   birthdateAccuracy: number | null;
   birthdate: any | null;
+  aliases: string[] | null;
   performances: Performer_getPerformer_performances[];
 }
 

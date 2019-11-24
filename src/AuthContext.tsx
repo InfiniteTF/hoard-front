@@ -2,8 +2,11 @@ import React from 'react';
 
 type ContextProps = { 
     authenticated: boolean,
-    username?: string,
-    setUsername?: any
+    user?: {
+        username?: string,
+        setUser?: any,
+        role?: number 
+    }
 };
 
 const AuthContext = React.createContext<ContextProps>({

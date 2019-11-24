@@ -36,6 +36,7 @@ const PerformerAdd: React.FC<RouteComponentProps> = () => {
         hairColor: null,
         tattoos: null,
         piercings: null,
+        aliases: null,
         photoUrl: null
     } as Performer;
 

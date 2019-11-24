@@ -1,6 +1,6 @@
 import StudioQuery from '../../queries/Studios.gql';
 import { Scene_getScene as Scene } from '../../definitions/Scene';
-import { Search_search as PerformerResult } from '../../definitions/Search';
+import { Search_search_performers as PerformerResult } from '../../definitions/Search';
 import { Studios } from '../../definitions/Studios';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
@@ -12,8 +12,8 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cx from 'classnames';
 
-import { GenderIcon } from '../fragments';
-import SearchField from '../searchField';
+import { GenderIcon, LoadingIndicator } from '../fragments';
+import SearchField, { SearchType } from '../searchField';
 
 const nullCheck = ((input, originalValue) => {
     return input === '' || input === 0  || Number.isNaN(input) || input === 'null' ? null : input
@@ -67,7 +67,7 @@ const SceneForm: React.FC<SceneProps> = ({scene, callback}) => {
     }, [register]);
     
     if(loadingStudios)
-        return <div>Loading scene...</div>;
+        return <LoadingIndicator message="Loading scene..." />
 
     const onURLChange = (e: React.ChangeEvent<HTMLInputElement>) => (
         setPhotoURL(e.currentTarget.value))
@@ -127,7 +127,7 @@ const SceneForm: React.FC<SceneProps> = ({scene, callback}) => {
                             <label htmlFor="date">Date</label>
                             <input className="form-control" type="text" placeholder="YYYY-MM-DD" name="date" defaultValue={
                                     scene.date === null ? '' :
-                                    scene.dateAccuracy === 1 ? scene.date: 
+                                    scene.dateAccuracy === 3 ? scene.date: 
                                     scene.dateAccuracy === 2 ? scene.date.slice(0,7) :
                                     scene.date.slice(0,4)
                             } ref={register} />
@@ -140,7 +140,7 @@ const SceneForm: React.FC<SceneProps> = ({scene, callback}) => {
                             { performerList }
                             <div className="add-performer">
                                 <span>Add performer:</span>
-                                <SearchField onClick={addPerformer} />
+                                <SearchField onClick={addPerformer} searchType={SearchType.Performer} />
                             </div>
                         </div>
                     </div>

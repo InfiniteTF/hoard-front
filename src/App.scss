@@ -1,5 +1,9 @@
 #hoard {
     @import "./components/**/*.scss";
+
+    .card-body {
+        padding: 0;
+    }
 }
 
 #hoard-content {
@@ -10,6 +14,10 @@
 
 .welcome {
     margin-right: 2rem;
+}
+
+.card {
+    margin-bottom: 1rem;
 }
 
 .pagination {
@@ -23,4 +31,22 @@ a[aria-current] {
 
 .btn {
     margin: 0.5rem;
+}
+
+.LoginPrompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70vh;
+
+    .email, .password {
+        width: 20rem;
+        text-align: right;
+    }
+
+    .login-button {
+        margin-left: 10rem;
+    }
 }

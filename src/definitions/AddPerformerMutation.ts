@@ -29,9 +29,10 @@ export interface AddPerformerMutation_addPerformer {
   careerEnd: number | null;
   cupSize: string | null;
   bandSize: number | null;
-  boobJob: string | null;
+  boobJob: boolean | null;
   birthdateAccuracy: number | null;
   birthdate: any | null;
+  aliases: string[] | null;
 }
 
 export interface AddPerformerMutation {

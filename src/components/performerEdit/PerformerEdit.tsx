@@ -6,6 +6,7 @@ import { RouteComponentProps } from '@reach/router';
 import UpdatePerformerMutation from '../../queries/UpdatePerformer.gql';
 import { navigate } from '@reach/router';
 
+import { LoadingIndicator } from '../fragments';
 import PerformerForm from '../performerForm';
 
 interface PerformerProps extends RouteComponentProps<{
@@ -25,7 +26,7 @@ const PerformerEdit: React.FC<PerformerProps> = ({id}) => {
     }
 
     if(loading)
-        return <div>Loading performer...</div>;
+        return <LoadingIndicator message="Loading performer..." />
 
     return (
         <div>

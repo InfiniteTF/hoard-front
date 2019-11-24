@@ -5,13 +5,15 @@ import { useQuery } from '@apollo/react-hooks';
 import { Card } from 'react-bootstrap';
 import { RouteComponentProps, Link } from '@reach/router';
 
+import { LoadingIndicator } from '../fragments';
+
 const Studios: React.FC<RouteComponentProps> = () => {
     const { loading: loadingData, data } = useQuery<Studios>(StudiosQuery, {
         variables: {skip: 0, limit: 1000}
     });
 
     if (loadingData)
-        return <div>Loading studios...</div>
+        return <LoadingIndicator message="Loading studios..." />
 
 
     const studios = data.getStudios;

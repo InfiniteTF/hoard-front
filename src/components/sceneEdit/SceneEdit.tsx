@@ -6,6 +6,7 @@ import { RouteComponentProps } from '@reach/router';
 import UpdateSceneMutation from '../../queries/UpdateScene.gql';
 import { navigate } from '@reach/router';
 
+import { LoadingIndicator } from '../fragments';
 import SceneForm from '../sceneForm';
 
 interface SceneProps extends RouteComponentProps<{
@@ -25,7 +26,7 @@ const SceneEdit: React.FC<SceneProps> = ({id}) => {
     }
 
     if(loading)
-        return <div>Loading studio...</div>;
+        return <LoadingIndicator message="Loading studio..." />
 
     return (
         <div>

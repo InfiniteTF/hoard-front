@@ -6,6 +6,7 @@ import { RouteComponentProps } from '@reach/router';
 import UpdateStudioMutation from '../../queries/UpdateStudio.gql';
 import { navigate } from '@reach/router';
 
+import { LoadingIndicator } from '../fragments';
 import StudioForm from '../studioForm';
 
 interface StudioProps extends RouteComponentProps<{
@@ -25,7 +26,7 @@ const StudioEdit: React.FC<StudioProps> = ({id}) => {
     }
 
     if(loading)
-        return <div>Loading studio...</div>;
+        return <LoadingIndicator message="Loading studio..." />
 
     return (
         <div>

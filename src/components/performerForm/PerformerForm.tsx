@@ -9,6 +9,8 @@ import useForm from 'react-hook-form';
 import Select from 'react-select'
 import * as yup from 'yup';
 
+import { LoadingIndicator } from '../fragments';
+
 type OptionEnum = {
     value:string;
     label:string;
@@ -93,6 +95,7 @@ const schema = yup.object().shape({
     hairColor: yup.string().transform(nullCheck).nullable().oneOf([null, ...HAIR.map(h => h.value)]),
     tattoos: yup.string().trim().transform(nullCheck).nullable(),
     piercings: yup.string().trim().transform(nullCheck).nullable(),
+    aliases: yup.string().trim().transform(nullCheck).nullable(),
     photoURL: yup.string().url().transform(nullCheck).nullable()
 });
 
@@ -114,7 +117,7 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
     }, [register]);
 
     if(loadingCountries)
-        return <div>Loading performer...</div>;
+        return <LoadingIndicator message="Loading performer..." />
 
     const onGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => (
         setGender(e.currentTarget.value))
@@ -128,22 +131,22 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
     );
 
     const onSubmit = (data:any) => {
-        data.boobJob =  data.boobJob === "natural" ? false : data.boobJob === "augmented" ? false : null;
+        data.boobJob =  data.boobJob === "natural" ? false : data.boobJob === "augmented" ? true : null;
         if(data.cupSize !== null) {
             data.bandSize = Number.parseInt(data.cupSize.match(/^\d+/)[0], 10);
             data.cupSize = data.cupSize.replace(data.bandSize, '').match(/^[a-zA-Z]+/)[0].toUpperCase();
         }
-        if(data.gender !== "female" || data.gender !== "transfemale")
+        if(data.gender !== "female" && data.gender !== "transfemale")
             data.boobJob = null;
         if(data.birthdate !== null) {
             if(data.birthdate.length === 10)
-                data.birthdateAccuracy = 1;
+                data.birthdateAccuracy = 3;
             else if(data.birthdate.length == 7){
                 data.birthdateAccuracy = 2;
                 data.birthdate = `${data.birthdate}-01`;
             }
             else {
-                data.birthdateAccuracy = 3;
+                data.birthdateAccuracy = 1;
                 data.birthdate = `${data.birthdate}-01-01`;
             }
         }
@@ -151,6 +154,8 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
             data.piercings = data.piercings.split(';').map((p:string) => p.trim());
         if(data.tattoos !== null)
             data.tattoos = data.tattoos.split(';').map((p:string) => p.trim());
+        if(data.aliases !== null)
+            data.aliases = data.aliases.split(';').map((p:string) => p.trim());
         callback(data);
     };
 
@@ -181,7 +186,7 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
                             <label htmlFor="birthdate">Birthdate</label>
                             <input className="form-control" type="text" placeholder="YYYY-MM-DD" name="birthdate" defaultValue={
                                     performer.birthdate === null ? '' :
-                                    performer.birthdateAccuracy === 1 ? performer.birthdate : 
+                                    performer.birthdateAccuracy === 3 ? performer.birthdate : 
                                     performer.birthdateAccuracy === 2 ? performer.birthdate.slice(0,7) :
                                     performer.birthdate.slice(0,4)
                             } ref={register} />
@@ -215,7 +220,7 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
                         { (gender == 'female' || gender == 'transfemale') && (
                             <div className="col-3">
                                 <label htmlFor="boobJob">Breast-type</label>
-                                <select className="form-control" name="boobJob" defaultValue={performer.boobJob ? 'augmented' : 'natural'} ref={register}>
+                                <select className="form-control" name="boobJob" defaultValue={performer.boobJob === true ? 'augmented' : performer.boobJob === false ? 'natural' : null} ref={register}>
                                     { enumOptions(BREAST) }
                                 </select>
                             </div>
@@ -266,6 +271,13 @@ const PerformerForm: React.FC<PerformerProps> = ({performer, callback}) => {
                         <div className="col-6">
                             <label htmlFor="piercings">Piercings <small className="text-muted">separated by <em>;</em></small></label>
                             <input className="form-control" type="text" placeholder="Piercings" name="piercings" defaultValue={(performer.piercings || []).join('; ')} ref={register} />
+                        </div>
+                    </div>
+
+                    <div className="form-group row">
+                        <div className="col">
+                            <label htmlFor="aliases">Aliases <small className="text-muted">separated by <em>;</em></small></label>
+                            <input className="form-control" type="text" placeholder="Aliases" name="aliases" defaultValue={(performer.aliases || []).join('; ')} ref={register} />
                         </div>
                     </div>
 

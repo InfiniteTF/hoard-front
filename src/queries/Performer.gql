@@ -24,6 +24,7 @@ query Performer($id: Uuid!) {
     boobJob
     birthdateAccuracy
     birthdate
+    aliases
 
     performances {
         title

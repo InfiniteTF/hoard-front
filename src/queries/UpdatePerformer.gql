@@ -23,5 +23,6 @@ mutation UpdatePerformerMutation($performerId: Int!, $performerData: UpdatePerfo
     boobJob
     birthdateAccuracy
     birthdate
+    aliases
   }
 }

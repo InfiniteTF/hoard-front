@@ -1,5 +1,6 @@
 import { Performer_getPerformer as Performer } from '../../../definitions/Performer';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../../../AuthContext';
 import DeletePerformerMutation from '../../../queries/DeletePerformer.gql';
 import { useMutation } from '@apollo/react-hooks';
 import { Link, navigate } from '@reach/router';
@@ -13,6 +14,7 @@ const PerformerCard: React.FC<{performer: Performer}> = ({ performer }) => {
     const [deletePerformer, { loading: deleting } ] = useMutation(DeletePerformerMutation, {
         variables: { performerId: performer.id }
     });
+    const auth = useContext(AuthContext);
 
     const toggleModal = () => {
         setShowDelete(true);
@@ -35,7 +37,7 @@ const PerformerCard: React.FC<{performer: Performer}> = ({ performer }) => {
                             <Link to="edit">
                                 <button type="button" className="btn btn-secondary">Edit</button>
                             </Link>
-                            <button type="button" disabled={showDelete || deleting} className="btn btn-danger" onClick={toggleModal}>Delete</button>
+                            { auth.user.role > 1 && <button type="button" disabled={showDelete || deleting} className="btn btn-danger" onClick={toggleModal}>Delete</button> }
                         </div>
                         <h2>
                         <GenderIcon gender={performer.gender} />
@@ -65,6 +67,7 @@ const PerformerCard: React.FC<{performer: Performer}> = ({ performer }) => {
                                     { performer.hipSize ? `${performer.hipSize}` : '??' }
                                     </td>
                                 </tr>
+                                { (performer.gender === 'female' || performer.gender === 'transfemale') && <tr><td>Breast type</td><td>{ performer.boobJob === false ? 'Natural' : performer.boobJob === true ? 'Augmented' : 'Unknown'}</td></tr> }
                                 <tr><td>Nationality</td><td>{ performer.countryId }</td></tr>
                                 <tr><td>Birthplace</td><td>{ performer.location }</td></tr>
                                 <tr><td>Ethnicity</td><td>{ performer.ethnicity }</td></tr>
@@ -72,6 +75,7 @@ const PerformerCard: React.FC<{performer: Performer}> = ({ performer }) => {
                                 <tr><td>Hair color</td><td>{ performer.hairColor }</td></tr>
                                 <tr><td>Tattoos</td><td>{ (performer.tattoos || []).join(', ') }</td></tr>
                                 <tr><td>Piercings</td><td>{ (performer.piercings|| []).join(', ') }</td></tr>
+                                <tr><td>Aliases</td><td>{ (performer.aliases || []).join(', ') }</td></tr>
                             </tbody>
                         </Table>
                     </Card.Body>

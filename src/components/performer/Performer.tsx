@@ -6,6 +6,7 @@ import { RouteComponentProps } from '@reach/router';
 
 import PerformerCard from './card/PerformerCard';
 import SceneCard from '../sceneCard/SceneCard';
+import { LoadingIndicator } from '../fragments';
 
 interface PerformerProps extends RouteComponentProps<{
     id: string;
@@ -17,7 +18,7 @@ const PerformerComponent: React.FC<PerformerProps> = ({id}) => {
     });
 
     if(loading)
-        return <div>Loading performer...</div>;
+        return <LoadingIndicator message="Loading performer..." />
 
     const scenes = data.getPerformer.performances.sort(
         (a, b) => { 
@@ -32,8 +33,8 @@ const PerformerComponent: React.FC<PerformerProps> = ({id}) => {
             <div className="performer-info">
                 <PerformerCard performer={data.getPerformer} />
             </div>
-            <hr />
-            <div className="row">
+            <hr /> 
+            <div className="row performer-scenes">
                 { scenes }
             </div>
         </>

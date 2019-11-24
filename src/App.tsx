@@ -4,6 +4,7 @@ import createClient from './utils/createClient';
 import { Router } from "@reach/router";
 import Login from './Login';
 import Main from './Main';
+import Home from './components/home';
 import Performers from './components/performers';
 import Performer from './components/performer';
 import PerformerEdit from './components/performerEdit';
@@ -26,6 +27,7 @@ const App: React.FC = () => (
     <ApolloProvider client={client}>
         <Router>
             <Main path="/">
+                <Home path="/" />
                 <Login path="/login" />
                 <Performers path="/performers" />
                 <Performer path="/performer/:id" />

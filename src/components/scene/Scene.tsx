@@ -1,12 +1,14 @@
+import AuthContext from '../../AuthContext';
 import SceneQuery from '../../queries/Scene.gql';
 import DeleteSceneMutation from '../../queries/DeleteScene.gql';
 import { Scene } from '../../definitions/Scene';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { RouteComponentProps, Link, navigate } from '@reach/router';
 import { Card } from 'react-bootstrap';
 import Modal from '../modal';
-import { GenderIcon } from '../fragments';
+
+import { GenderIcon, LoadingIndicator } from '../fragments';
 
 interface SceneProps extends RouteComponentProps<{
     id: string;
@@ -18,9 +20,10 @@ const Scene: React.FC<SceneProps> = ({id}) => {
         variables: { id }
     });
     const [deleteScene, { loading: deleting } ] = useMutation(DeleteSceneMutation);
+    const auth = useContext(AuthContext);
 
     if(loading)
-        return <div>Loading scene...</div>;
+        return <LoadingIndicator message="Loading scene..." />
     const scene = data.getScene;
 
     const toggleModal = () => setShowDelete(true);
@@ -49,7 +52,7 @@ const Scene: React.FC<SceneProps> = ({id}) => {
                         <Link to="edit">
                             <button type="button" className="btn btn-secondary">Edit</button>
                         </Link>
-                        <button type="button" disabled={showDelete || deleting} className="btn btn-danger" onClick={toggleModal}>Delete</button>
+                        { auth.user.role > 1 && <button type="button" disabled={showDelete || deleting} className="btn btn-danger" onClick={toggleModal}>Delete</button> }
                     </div>
                     <h2>{scene.title}</h2>
                     <h6><Link to={`/studio/${scene.studio.uuid}`}>{scene.studio.title}</Link> • { scene.date}</h6>

@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { RouteComponentProps, Link } from '@reach/router';
 import Pagination from '../pagination';
 
+import { LoadingIndicator } from '../fragments';
 import SceneCard from '../sceneCard/SceneCard';
 
 interface StudioProps extends RouteComponentProps<{
@@ -18,7 +19,7 @@ const Studio: React.FC<StudioProps> = ({id}) => {
     });
 
     if(loading)
-        return <div>Loading studio...</div>;
+        return <LoadingIndicator message="Loading studio..." />
 
     const studio = data.getStudio;
 
@@ -31,7 +32,7 @@ const Studio: React.FC<StudioProps> = ({id}) => {
             else if(a.date > b.date) return -1;
             return -1;
         }
-    ).map(p => (<SceneCard performance={p} />));
+    ).map(p => (<SceneCard key={p.uuid} performance={p} />));
 
     const handleDelete = () => {
     }

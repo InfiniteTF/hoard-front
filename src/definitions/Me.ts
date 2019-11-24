@@ -9,6 +9,7 @@
 export interface Me_me {
   username: string;
   email: string;
+  role: number;
 }
 
 export interface Me {
